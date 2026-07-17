@@ -1,0 +1,20 @@
+{
+    "entity": {
+        "title": "Solarman",
+        "sensor": {
+            "dv1": { "name": "PV1 Voltage" },
+            "dv2": { "name": "PV2 Voltage" },
+            "dc1": { "name": "PV1 Current" },
+            "dp1": { "name": "PV1 Power" },
+            "av1": { "name": "AC R Voltage" },
+            "ac1": { "name": "AC R Current" },
+            "a_fo1": { "name": "AC Frequency" },
+            "apo_t1": { "name": "AC Output Power" },
+            "et_ge0": { "name": "Total Production" },
+            "etdy_ge1": { "name": "Daily Production" },
+            "e_puse_t1": { "name": "Total Consumption Power" },
+            "etdy_use1": { "name": "Daily Consumption" },
+            "inv_t0": { "name": "Inverter Temperature" }
+        }
+    }
+}

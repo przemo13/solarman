@@ -1,0 +1,10 @@
+{
+    "domain": "solarman_custom2",
+    "name": "Solarman PV Custom",
+    "codeowners": [],
+    "config_flow": true,
+    "dependencies": [],
+    "iot_class": "cloud_polling",
+    "requirements": [],
+    "version": "1.0.0"
+}

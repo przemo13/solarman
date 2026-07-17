@@ -1,0 +1,20 @@
+{
+    "entity": {
+        "title": "Solarman",
+        "sensor": {
+            "dv1": { "name": "Napięcie PV1" },
+            "dv2": { "name": "Napięcie PV2" },
+            "dc1": { "name": "Prąd PV1" },
+            "dp1": { "name": "Moc PV1" },
+            "av1": { "name": "Napięcie AC R" },
+            "ac1": { "name": "Prąd AC R" },
+            "a_fo1": { "name": "Częstotliwość AC" },
+            "apo_t1": { "name": "Moc wyjściowa AC" },
+            "et_ge0": { "name": "Produkcja całkowita" },
+            "etdy_ge1": { "name": "Produkcja dzienna" },
+            "e_puse_t1": { "name": "Moc zużycia całkowita" },
+            "etdy_use1": { "name": "Zużycie dzienne" },
+            "inv_t0": { "name": "Temperatura falownika" }
+        }
+    }
+}
