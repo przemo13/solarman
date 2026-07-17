@@ -4,9 +4,8 @@ import hashlib  # NEEDED FOR SHA256
 import voluptuous as vol
 import aiohttp
 
-from homeassistant import config_entries
-from homeassistant.core import callback
-from homeassistant.data_entry_flow import FlowResult
+from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import DOMAIN
 
@@ -24,12 +23,12 @@ DATA_SCHEMA = vol.Schema(
     }
 )
 
-class SolarmanCustomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+class SolarmanCustomConfigFlow(ConfigFlow, domain=DOMAIN):
     """Handle the Solarman integration configuration process through the user interface."""
 
     VERSION = 1
 
-    async def async_step_user(self, user_input=None) -> FlowResult:
+    async def async_step_user(self, user_input=None) -> ConfigFlowResult:
         """Step invoked when the user manually adds the integration."""
         errors = {}
 
@@ -58,21 +57,23 @@ class SolarmanCustomConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 "password": user_input["password"]  # Send the SHA256 hash
             }
 
+            session = async_get_clientsession(self.hass)
             try:
-                async with aiohttp.ClientSession() as session:
-                    async with session.post(url, json=payload, timeout=10) as response:
-                        if response.status != 200:
+                async with session.post(
+                    url, json=payload, timeout=aiohttp.ClientTimeout(total=10)
+                ) as response:
+                    if response.status != 200:
+                        errors["base"] = "invalid_auth"
+                    else:
+                        res_json = await response.json()
+                        if not res_json.get("success"):
                             errors["base"] = "invalid_auth"
                         else:
-                            res_json = await response.json()
-                            if not res_json.get("success"):
-                                errors["base"] = "invalid_auth"
-                            else:
-                                # All OK -> create the entry in Home Assistant
-                                return self.async_create_entry(
-                                    title=user_input["device_name"],
-                                    data=user_input
-                                )
+                            # All OK -> create the entry in Home Assistant
+                            return self.async_create_entry(
+                                title=user_input["device_name"],
+                                data=user_input
+                            )
             except aiohttp.ClientError:
                 errors["base"] = "cannot_connect"
             except Exception:  # pylint: disable=broad-except

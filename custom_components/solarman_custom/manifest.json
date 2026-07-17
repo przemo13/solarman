@@ -1,5 +1,5 @@
 {
-    "domain": "solarman_custom2",
+    "domain": "solarman_custom",
     "name": "Solarman PV Custom",
     "codeowners": [],
     "config_flow": true,
