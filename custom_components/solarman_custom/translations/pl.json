@@ -12,8 +12,7 @@
             "apo_t1": { "name": "Moc wyjściowa AC" },
             "et_ge0": { "name": "Produkcja całkowita" },
             "etdy_ge1": { "name": "Produkcja dzienna" },
-            "e_puse_t1": { "name": "Moc zużycia całkowita" },
-            "etdy_use1": { "name": "Zużycie dzienne" },
+            "e_puse_t1": { "name": "Total Consumption Power" },
             "inv_t0": { "name": "Temperatura falownika" }
         }
     }

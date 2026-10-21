@@ -13,7 +13,6 @@
             "et_ge0": { "name": "Gesamterzeugung" },
             "etdy_ge1": { "name": "Tageserzeugung" },
             "e_puse_t1": { "name": "Gesamtverbrauchsleistung" },
-            "etdy_use1": { "name": "Tagesverbrauch" },
             "inv_t0": { "name": "Wechselrichtertemperatur" }
         }
     }

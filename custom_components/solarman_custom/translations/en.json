@@ -13,7 +13,6 @@
             "et_ge0": { "name": "Total Production" },
             "etdy_ge1": { "name": "Daily Production" },
             "e_puse_t1": { "name": "Total Consumption Power" },
-            "etdy_use1": { "name": "Daily Consumption" },
             "inv_t0": { "name": "Inverter Temperature" }
         }
     }

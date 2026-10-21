@@ -33,7 +33,6 @@ async def async_setup_entry(
         ("Et_ge0", SensorDeviceClass.ENERGY),
         ("Etdy_ge1", SensorDeviceClass.ENERGY),
         ("E_Puse_t1", SensorDeviceClass.POWER),
-        ("Etdy_use1", SensorDeviceClass.ENERGY),
         ("INV_T0", SensorDeviceClass.TEMPERATURE),
     ]
 
