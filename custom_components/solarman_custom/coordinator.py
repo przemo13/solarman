@@ -11,7 +11,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import AC_OUTPUT_KEYS, PV_INPUT_KEYS, SCAN_INTERVAL_MINUTES
+from .const import PV_INPUT_KEYS, SCAN_INTERVAL_MINUTES, ZERO_WHEN_PV_IDLE_KEYS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -181,20 +181,20 @@ class SolarmanDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                     "unit": item.get("unit")
                 }
 
-        self._zero_ac_output_when_pv_idle(mapped_dict)
+        self._zero_readings_when_pv_idle(mapped_dict)
 
         _LOGGER.debug("Successfully parsed Solarman data: %s", mapped_dict)
         return mapped_dict
 
     @staticmethod
-    def _zero_ac_output_when_pv_idle(data: dict[str, Any]) -> None:
-        """Zero the AC power/current readings when every PV input reports zero.
+    def _zero_readings_when_pv_idle(data: dict[str, Any]) -> None:
+        """Zero the AC output and PV voltage readings when every PV input reports zero.
 
         After dusk the inverter shuts down and the Solarman cloud keeps serving
-        its last snapshot until morning, so AC output would show a stale non-zero
-        value all night. With no PV power and no PV current there is nothing to
-        output, so those readings are forced to 0. Voltages, frequency,
-        temperature and energy counters are left untouched.
+        its last snapshot until morning, so AC output and PV voltages would show
+        stale non-zero values all night. With no PV power and no PV current those
+        readings are forced to 0. Grid voltage, frequency, temperature and energy
+        counters are left untouched.
         """
         pv_values = [data[key]["value"] for key in PV_INPUT_KEYS if key in data]
         if not pv_values:
@@ -205,6 +205,6 @@ class SolarmanDataUpdateCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         except (TypeError, ValueError):
             return
 
-        for key in AC_OUTPUT_KEYS:
+        for key in ZERO_WHEN_PV_IDLE_KEYS:
             if key in data:
                 data[key]["value"] = "0"
